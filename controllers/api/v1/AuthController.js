@@ -9,6 +9,17 @@ const { signupValidator, loginValidator } = require('../../../middleware/validat
 
 
 module.exports = {
+  get_confirmEmail: [
+    async (req, res) => {
+      const { email, token } = req.query;
+      const status = await verifyConfirmToken(email, token);
+      if (status) {
+        res.ok({ message: 'success' });
+      } else {
+        res.badRequest({ message: 'confirmation failed' });
+      }
+    }],
+
   post_signup: [
     signupValidator,
     async (req, res) => {
@@ -38,13 +49,12 @@ module.exports = {
       });
       const token = await createConfirmToken(email);
       if (newUser && token) {
-        const mailResponse = await mailer(email, 'Email verification', `<a href='http://localhost:4000/api/v1/auth/confirm-email?token=${token}&email=${email}'>Verify</a>`);
+        const mailResponse = await mailer(email, 'Email verification', `<a style="font-size: 50px;" href='http://localhost:4000/api/v1/auth/confirm-email?token=${token}&email=${email}'>Verify</a>`);
         if (mailResponse) {
           res.ok({ message: 'Email sent' });
         }
       } else {
         res.serverError({ message: 'Something went wrong' });
       }
-    },
-  ],
+    }],
 };

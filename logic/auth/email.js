@@ -33,7 +33,7 @@ const verifyConfirmToken = async (email, token) => {
   try {
     const user = await User.findOne({ email });
     if (token === user.token) {
-      const updatedUser = await User.findOneAndUpdate({ email }, { isVarified: true }, { new: true });
+      const updatedUser = await User.findOneAndUpdate({ email }, { verfied: true }, { new: true });
       if (updatedUser) return true;
       return false;
     }

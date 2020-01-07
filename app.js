@@ -2,7 +2,6 @@
 const http = require('http');
 const cors = require('cors');
 const express = require('express');
-const expressSession = require('express-session');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const expressController = require('express-controller');
