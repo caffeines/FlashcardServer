@@ -1,7 +1,9 @@
-const User = require('../../../models/User');
+const { authenticate, authorizeAdminOrOwner } = require('../../../middleware/auth');
 
 module.exports = {
-  get_index: async (req, res) => {
-    
-  },
+  get_index: [
+    authenticate,
+    async (req, res) => {
+      res.ok({ hello: 'Hello' });
+    }],
 };

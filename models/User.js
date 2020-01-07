@@ -16,6 +16,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    required: true,
+  },
   verfied: {
     type: Boolean,
     default: false,
@@ -23,9 +27,12 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     default: 'owner',
-  }
+  },
+  token: {
+    type: String,
+  },
 });
 UserSchema.index({
-  "$**": "text"
+  '$**': 'text',
 });
 module.exports = getModel('User', UserSchema);
