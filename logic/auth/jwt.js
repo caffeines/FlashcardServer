@@ -18,6 +18,8 @@ const createToken = async (user) => {
   const {
     username, _id: id, role, email,
   } = user;
+  console.log(username, id, role, email);
+
   let TTL;
   if (role === 'admin' || role === 'moderator') TTL = 1000 * 60 * 60;
   const payload = {
@@ -25,7 +27,7 @@ const createToken = async (user) => {
   };
 
   try {
-    const token = await signAsync(payload, { expiresIn: TTL || jwtTTL || '30d' });
+    const token = await signAsync(payload, secret, { expiresIn: TTL || jwtTTL || '30d' });
     return token;
   } catch (ex) {
     error(ex);
