@@ -62,10 +62,12 @@ module.exports = {
       });
       const token = await createConfirmToken(email);
       if (newUser && token) {
-        const mailResponse = await mailer(email,
+        const { status, message } = await mailer(email,
           'Email verification', `<a style="font-size: 50px;" href='${appLink}/api/v1/auth/confirm-email?token=${token}&email=${email}'>Verify</a>`);
-        if (mailResponse) {
-          res.ok({ message: 'Email sent' });
+        if (status) {
+          res.ok({ message });
+        } else {
+          res.serverError({ message });
         }
       } else {
         res.serverError({ message: 'Something went wrong' });
@@ -86,7 +88,7 @@ module.exports = {
         }
         const { verfied, token: verificationToken } = user;
         if (!verfied && verificationToken) {
-          const mailResponse = await mailer(user.email, 'Email verification', `<a href='${server.URL}/api/v1/auth/confirm-email?token=${user.token}&email=${user.email}'>Verify</a>`);
+          const mailResponse = await mailer(user.email, 'Email verification', `<a href='${appLink}/api/v1/auth/confirm-email?token=${user.token}&email=${user.email}'>Verify</a>`);
           if (mailResponse) {
             res.forbidden({ message: 'Please confirm your email' });
             return;

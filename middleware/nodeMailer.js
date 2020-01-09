@@ -20,7 +20,7 @@ const mailer = async (to, subject, htmlBody) => {
     });
     if (info) {
       success(`Mail messageId: ${info.messageId}`);
-      return { status: false, message: 'Mail sending failed!' };
+      return { status: true, message: 'Email sent!' };
     }
   } catch (err) {
     error(err);

@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 const { authenticate, authorizeAdminOrOwner } = require('../../../middleware/auth');
 const userFindLogic = require('../../../logic/User/findLogic');
 
@@ -15,7 +16,8 @@ module.exports = {
       const { findById } = userFindLogic;
       const profile = await findById(id);
       if (profile) {
-        res.ok(profile);
+        const { username, name, email, role, joinedAt } = profile;
+        res.ok({ username, name, email, role, joinedAt });
       } else {
         res.notFound({ message: 'user not found' });
       }

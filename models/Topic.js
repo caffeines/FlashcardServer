@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ObjectId = require('mongoose').SchemaType;
+const ObjectId = require('mongoose').SchemaTypes;
 const { getModel } = require('../lib/utils');
 
 const TopicSchema = new mongoose.Schema({
@@ -12,6 +12,11 @@ const TopicSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createdBy: {
+    type: ObjectId,
+    ref: 'User',
+    required: true,
+  },
   url: {
     type: String,
   },
@@ -21,11 +26,11 @@ const TopicSchema = new mongoose.Schema({
   skill: {
     type: Number,
     default: 0,
-  }
+  },
 });
 
 TopicSchema.index({
-  "$**": "text"
+  '$**': 'text',
 });
 
 module.exports = getModel('Topic', TopicSchema);

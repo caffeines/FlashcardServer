@@ -20,7 +20,7 @@ exports.findByUsername = findByUsername;
 /**
  * @async
  * @static
- * @param {String} username
+ * @param {String} id (mongoose ObjectId)
  * @returns {Promise<object | null>} User data(see your model).
  */
 const findById = async (id) => {

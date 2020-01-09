@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ObjectId = require('mongoose').SchemaType;
+const ObjectId = require('mongoose').SchemaTypes;
 const { getModel } = require('../lib/utils');
 
 const CardSchema = new mongoose.Schema({
@@ -25,6 +25,6 @@ const CardSchema = new mongoose.Schema({
 
 });
 CardSchema.index({
-  "$**": "text"
+  '$**': 'text',
 });
 module.exports = getModel('Card', CardSchema);
