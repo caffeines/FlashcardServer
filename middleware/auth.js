@@ -5,6 +5,7 @@ const authenticate = async (req, res, next) => {
   const bearer = req.headers.authorization;
   if (typeof bearer === 'undefined') {
     res.forbidden({ message: 'not logged in' });
+    return;
   }
 
   if (typeof bearer !== 'undefined') {
@@ -12,7 +13,10 @@ const authenticate = async (req, res, next) => {
 
     try {
       const payload = await verifyToken(token);
-      if (!payload) res.unauthorized({ message: 'unauthorized' });
+      if (!payload) {
+        res.unauthorized({ message: 'unauthorized' });
+        return;
+      }
       if (payload.role === 'admin' || payload.role === 'owner') {
         req.admin = payload;
         next();

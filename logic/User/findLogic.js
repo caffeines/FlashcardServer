@@ -16,3 +16,19 @@ const findByUsername = async (username) => {
   }
 };
 exports.findByUsername = findByUsername;
+
+/**
+ * @async
+ * @static
+ * @param {String} username
+ * @returns {Promise<object | null>} User data(see your model).
+ */
+const findById = async (id) => {
+  try {
+    const user = await User.findOne({ _id: id });
+    return user;
+  } catch (ex) {
+    error(ex);
+  }
+};
+exports.findById = findById;

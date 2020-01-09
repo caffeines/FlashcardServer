@@ -44,7 +44,7 @@ exports.createToken = createToken;
  */
 const verifyToken = async (token) => {
   try {
-    const payload = await verifyAsync(token);
+    const payload = await verifyAsync(token, secret);
     return payload;
   } catch (ex) {
     error(ex);

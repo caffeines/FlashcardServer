@@ -10,6 +10,16 @@ const loginValidator = (req, res, next) => {
 };
 exports.loginValidator = loginValidator;
 
+const usernemaIsAvailebleValidator = (req, res, next) => {
+  const { username } = req.query;
+  if (!username || username === '') {
+    res.badRequest({ message: 'no a valid request' });
+    return;
+  }
+  next();
+};
+exports.usernemaIsAvailebleValidator = usernemaIsAvailebleValidator;
+
 const signupValidator = (req, res, next) => {
   const userInfo = Object.keys(req.body);
   const allowedInfo = ['name', 'email', 'password', 'username'];
