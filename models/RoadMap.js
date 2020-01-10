@@ -31,6 +31,10 @@ const RoadMapSchema = new mongoose.Schema({
     type: ObjectId,
     ref: 'User',
   }],
+  ownStatus: {
+    type: String,
+    default: 'public',
+  },
 });
 RoadMapSchema.index({
   '$**': 'text',
