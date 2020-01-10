@@ -6,14 +6,15 @@ const CardSchema = new mongoose.Schema({
   title: {
     type: String,
     minlength: 5,
-    unique: true,
     required: true,
   },
   back: {
     type: String,
+    required: true,
   },
   state: {
-    type: String,
+    type: String, // Known or unknown
+    default: 'unknown',
   },
   style: {
     type: String,
@@ -21,8 +22,12 @@ const CardSchema = new mongoose.Schema({
   topic: {
     type: ObjectId,
     ref: 'Topic',
+    required: true,
   },
-
+  created: {
+    type: Number,
+    default: Date.now(),
+  },
 });
 CardSchema.index({
   '$**': 'text',

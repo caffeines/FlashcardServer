@@ -33,7 +33,7 @@ const signupValidator = (req, res, next) => {
     name, username, email, password,
   } = req.body;
 
-  if (name === '' || !username || username === '' || !email || email === '' || !password || password === '') {
+  if (!name || name === '' || !username || username === '' || !email || email === '' || !password || password === '') {
     res.badRequest({ message: 'Check your input fields' });
     return;
   }
