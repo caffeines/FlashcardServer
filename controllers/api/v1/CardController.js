@@ -5,6 +5,7 @@ const { createCardValidator } = require('../../../middleware/validator/request/c
 
 module.exports = {
   get_index: [
+    authenticate,
     async (req, res) => {
       res.ok();
     }],
