@@ -86,17 +86,26 @@ module.exports = {
           res.notFound({ message: 'User not found' });
           return;
         }
-        const { verfied, token: verificationToken } = user;
-        if (!verfied && verificationToken) {
-          const mailResponse = await mailer(user.email, 'Email verification', `<a href='${appLink}/api/v1/auth/confirm-email?token=${user.token}&email=${user.email}'>Verify</a>`);
-          if (mailResponse) {
-            res.forbidden({ message: 'Please confirm your email' });
+        const { verfied, token: tokn, email } = user;
+        let verificationToken = tokn;
+        if (!verificationToken) {
+          verificationToken = await createConfirmToken(email);
+        }
+        try {
+          if (!verfied && verificationToken) {
+            const mailResponse = await mailer(user.email, 'Email verification', `<a href='${appLink}/api/v1/auth/confirm-email?token=${user.token}&email=${user.email}'>Verify</a>`);
+            if (mailResponse) {
+              res.forbidden({ message: 'Please confirm your email' });
+              return;
+            }
+            res.serverError({ message: 'Something went wrong' });
             return;
           }
-          res.serverError({ message: 'Something went wrong' });
-          return;
+        } catch (error) {
+          console.log(error);
         }
-        if (!verfied && !verificationToken) {
+
+        if (verfied === undefined && !verificationToken) {
           res.serverError({ message: 'Something went wrong' });
           return;
         }
