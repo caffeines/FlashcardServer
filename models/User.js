@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ObjectId = require('mongoose').SchemaTypes;
 const { getModel } = require('../lib/utils');
 
 const UserSchema = new mongoose.Schema({
@@ -33,6 +34,13 @@ const UserSchema = new mongoose.Schema({
   joinedAt: {
     type: Number,
     default: Date.now(),
+  },
+  suggestedTopics: {
+    type: [String],
+  },
+  lovedCard: {
+    type: [ObjectId],
+    ref: 'Card',
   },
 });
 UserSchema.index({
