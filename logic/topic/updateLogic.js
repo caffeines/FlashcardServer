@@ -8,10 +8,17 @@ const { error } = require('../../constant/chalkEvent');
  * @returns {Promise<object | null>} Topic data(see your model).
  */
 
-const createTopic = async (topicObj) => {
+const createTopic = async (name) => {
   try {
-    const newTopic = new Topic({ ...topicObj });
-    const topic = await newTopic.save();
+    const Name = name.trim();
+    const topic = await Topic.findOneAndUpdate(
+      { name: Name },
+      {
+        $inc: { score: 1 },
+        $set: { name: Name },
+      },
+      { upsert: true, new: true },
+    );
     return topic;
   } catch (ex) {
     error(ex);

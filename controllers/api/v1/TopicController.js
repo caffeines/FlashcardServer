@@ -1,5 +1,5 @@
 /* eslint-disable object-curly-newline */
-const topicCreateLogic = require('../.././../logic/topic/createLogic');
+const topicCreateLogic = require('../.././../logic/topic/updateLogic');
 const { authenticate, authorizeAdminOrOwner } = require('../../../middleware/auth');
 const { createValidator } = require('../../../middleware/validator/request/topic');
 
@@ -8,14 +8,14 @@ module.exports = {
     async (req, res) => {
       res.ok({ message: 'Hello Docker!' });
     }],
-  post_index: [
+  patch_index: [
     authenticate,
+    authorizeAdminOrOwner,
     createValidator,
     async (req, res) => {
-      const { name, description, url, tag, skill } = req.body;
-      const { id: createdBy } = req.admin || req.user;
+      const { name } = req.body;
       const { createTopic } = topicCreateLogic;
-      const topic = await createTopic({ name, description, createdBy, url, tag, skill });
+      const topic = await createTopic(name);
       if (topic) {
         res.ok(topic);
       } else {

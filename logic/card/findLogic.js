@@ -87,7 +87,7 @@ exports.paginateByDate = paginateByDate;
  * @description it will return paginated chunk of data.
  * @returns {Promise<object | null>} Card data(see your model).
  */
-const findCardByTitle = async (type, lastId, page, limit, topics, options) => {
+const findCard = async (type, lastId, page, limit, topics, options) => {
   let query = {
     topic: { $in: [...topics] },
     ...options,
@@ -106,4 +106,4 @@ const findCardByTitle = async (type, lastId, page, limit, topics, options) => {
   }
   return cards;
 };
-exports.findCardByTitle = findCardByTitle;
+exports.findCard = findCard;

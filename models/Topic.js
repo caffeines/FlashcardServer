@@ -8,7 +8,7 @@ const TopicSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  stat: {
+  score: {
     type: Number,
     default: 0,
   },
