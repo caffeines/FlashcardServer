@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ObjectId = require('mongoose').SchemaTypes;
+const { ObjectId } = require('mongoose').SchemaTypes;
 const { getModel } = require('../lib/utils');
 
 const UserSchema = new mongoose.Schema({

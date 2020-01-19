@@ -26,6 +26,10 @@ const CardSchema = new mongoose.Schema({
   love: {
     type: Number,
   },
+  createdBy: {
+    type: String,
+    required: true,
+  },
 });
 CardSchema.index({
   '$**': 'text',

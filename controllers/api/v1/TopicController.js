@@ -5,9 +5,8 @@ const { createValidator } = require('../../../middleware/validator/request/topic
 
 module.exports = {
   get_index: [
-    authenticate,
     async (req, res) => {
-      res.serverError();
+      res.ok({ message: 'Hello Docker!' });
     }],
   post_index: [
     authenticate,
