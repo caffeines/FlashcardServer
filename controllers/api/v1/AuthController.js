@@ -79,7 +79,6 @@ module.exports = {
     async (req, res) => {
       const { findByUsername } = userFindLogic;
       const { username, password } = req.body;
-
       try {
         const user = await findByUsername(username);
         if (!user) {
@@ -93,7 +92,7 @@ module.exports = {
         }
         try {
           if (!verfied && verificationToken) {
-            const mailResponse = await mailer(user.email, 'Email verification', `<a href='${appLink}/api/v1/auth/confirm-email?token=${user.token}&email=${user.email}'>Verify</a>`);
+            const mailResponse = await mailer(user.email, 'Email verification', `<a href='${appLink}/verify?token=${verificationToken}&email=${user.email}'>Verify</a>`);
             if (mailResponse) {
               res.forbidden({ message: 'Please confirm your email' });
               return;
@@ -101,8 +100,8 @@ module.exports = {
             res.serverError({ message: 'Something went wrong' });
             return;
           }
-        } catch (error) {
-          console.log(error);
+        } catch (ex) {
+          console.log(ex);
         }
 
         if (verfied === undefined && !verificationToken) {
