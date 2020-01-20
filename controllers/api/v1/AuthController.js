@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const bcrypt = require('bcrypt');
 const userCreateLogic = require('../../../logic/User/createLogic');
 const userFindLogic = require('../../../logic/User/findLogic');
@@ -13,8 +14,12 @@ const { appLink } = require('../../../config/server');
 module.exports = {
   get_confirmEmail: [
     async (req, res) => {
-      const { email, token } = req.query;
-      const status = await verifyConfirmToken(email, token);
+      const { userid, token } = req.query;
+      console.log(userid, token);
+
+      const status = await verifyConfirmToken(userid, token);
+      console.log(status);
+
       if (status) {
         res.ok({ message: 'success' });
       } else {
@@ -46,7 +51,7 @@ module.exports = {
         const token = await createConfirmToken(email);
         if (!user.verfied) {
           if (token) {
-            const mailResponse = await mailer(email, 'Email verification', `<a href='${appLink}/api/v1/auth/confirm-email?token=${token}&email=${email}'>Verify</a>`);
+            const mailResponse = await mailer(email, 'Email verification', `<a href='${appLink}/verify?token=${token}&userid=${user._id}'>Verify</a>`);
             if (mailResponse) {
               res.forbidden({ message: 'User name allready exist, confirm your mail' });
               return;
@@ -60,10 +65,10 @@ module.exports = {
       const newUser = await createUser({
         username, password: hashedPassword, email, name,
       });
-      const token = await createConfirmToken(email);
+      const token = await createConfirmToken(newUser._id);
       if (newUser && token) {
         const { status, message } = await mailer(email,
-          'Email verification', `<a style="font-size: 50px;" href='${appLink}/api/v1/auth/confirm-email?token=${token}&email=${email}'>Verify</a>`);
+          'Email verification', `<a style="font-size: 50px;" href='${appLink}/verify?token=${token}&userid=${newUser._id}'>Verify</a>`);
         if (status) {
           res.ok({ message });
         } else {
@@ -92,7 +97,7 @@ module.exports = {
         }
         try {
           if (!verfied && verificationToken) {
-            const mailResponse = await mailer(user.email, 'Email verification', `<a href='${appLink}/verify?token=${verificationToken}&email=${user.email}'>Verify</a>`);
+            const mailResponse = await mailer(user.email, 'Email verification', `<a href='${appLink}/verify?token=${verificationToken}&userid=${user._id}'>Verify</a>`);
             if (mailResponse) {
               res.forbidden({ message: 'Please confirm your email' });
               return;

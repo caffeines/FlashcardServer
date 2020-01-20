@@ -8,10 +8,10 @@ const User = require('../../models/User');
  * @param {String} email
  * @returns {Promise <object | null>} tokens
  */
-const createConfirmToken = async (email) => {
+const createConfirmToken = async (id) => {
   const token = await cryptoRandomString(29);
   try {
-    const updatedToken = await User.findOneAndUpdate({ email }, { token });
+    const updatedToken = await User.findOneAndUpdate({ _id: id }, { token });
     if (updatedToken) {
       return token;
     }
@@ -29,11 +29,11 @@ exports.createConfirmToken = createConfirmToken;
  * @param {String} Token
  * @returns {Promise <object | null>} true or false
  */
-const verifyConfirmToken = async (email, token) => {
+const verifyConfirmToken = async (_id, token) => {
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ _id });
     if (token === user.token) {
-      const updatedUser = await User.findOneAndUpdate({ email }, { verfied: true }, { new: true });
+      const updatedUser = await User.findOneAndUpdate({ _id }, { verfied: true }, { new: true });
       if (updatedUser) return true;
       return false;
     }
