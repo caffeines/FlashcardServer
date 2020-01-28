@@ -32,12 +32,12 @@ const paginateByLove = async (limit, page, query) => {
     const Page = Number(page) || 1;
     let cards;
     if (Page === 1) {
-      cards = Card.find({ ...query })
+      cards = await Card.find({ ...query })
         .sort({ love: 'Desc' })
         .limit(Limit);
     } else {
       const skips = Limit * (Page - 1);
-      cards = Card.find({ ...query })
+      cards = await Card.find({ ...query })
         .sort({ love: 'Desc' })
         .skip(skips)
         .limit(Limit);
@@ -47,6 +47,7 @@ const paginateByLove = async (limit, page, query) => {
     return { cards, hasMore };
   } catch (ex) {
     error(ex);
+    return ex;
   }
 };
 exports.paginate = paginateByLove;
@@ -65,13 +66,14 @@ const paginateByDate = async (limit, page, query) => {
   try {
     const Limit = Number(limit) || 25;
     const Page = Number(page);
-    const cards = Card.find({ ...query })
+    const cards = await Card.find({ ...query })
       .limit(Limit);
     const totalProduct = await Card.countDocuments();
     const hasMore = totalProduct > Page * Limit;
     return { cards, hasMore };
   } catch (ex) {
     error(ex);
+    return ex;
   }
 };
 exports.paginateByDate = paginateByDate;

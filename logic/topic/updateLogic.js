@@ -22,6 +22,7 @@ const createTopic = async (name) => {
     return topic;
   } catch (ex) {
     error(ex);
+    return ex;
   }
 };
 exports.createTopic = createTopic;

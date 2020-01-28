@@ -15,11 +15,7 @@ module.exports = {
   get_confirmEmail: [
     async (req, res) => {
       const { userid, token } = req.query;
-      console.log(userid, token);
-
       const status = await verifyConfirmToken(userid, token);
-      console.log(status);
-
       if (status) {
         res.ok({ message: 'success' });
       } else {

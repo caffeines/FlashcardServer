@@ -10,6 +10,8 @@ const { error } = require('../../constant/chalkEvent');
 const findByUsername = async (username) => {
   try {
     const user = await User.findOne({ username });
+    console.log(user);
+
     return user;
   } catch (ex) {
     error(ex);
