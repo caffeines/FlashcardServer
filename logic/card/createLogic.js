@@ -8,6 +8,7 @@ const createCard = async (cardObj) => {
     return card;
   } catch (ex) {
     error(ex);
+    return Promise.reject(ex);
   }
 };
 exports.createCard = createCard;

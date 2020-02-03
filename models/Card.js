@@ -4,12 +4,12 @@ const { getModel } = require('../lib/utils');
 const CardSchema = new mongoose.Schema({
   title: {
     type: String,
-    minlength: 5,
+    minlength: 100,
     required: true,
   },
   description: {
     type: String,
-    maxlength: 3000,
+    maxlength: 5000,
   },
   state: {
     type: String, // known or unknown

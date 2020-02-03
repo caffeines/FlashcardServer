@@ -67,6 +67,7 @@ const paginateByDate = async (limit, page, query) => {
     const Limit = Number(limit) || 25;
     const Page = Number(page);
     const cards = await Card.find({ ...query })
+      .sort({ created: -1 })
       .limit(Limit);
     const totalProduct = await Card.countDocuments();
     const hasMore = totalProduct > Page * Limit;
@@ -90,10 +91,13 @@ exports.paginateByDate = paginateByDate;
  * @returns {Promise<object | null>} Card data(see your model).
  */
 const findCard = async (type, lastId, page, limit, topics, options) => {
-  let query = {
-    topic: { $in: [...topics] },
-    ...options,
-  };
+  let query = {};
+  if (topics) {
+    query = {
+      topic: { $in: [...topics] },
+      ...options,
+    };
+  }
   let cards;
   if (type === 'love') {
     cards = await paginateByLove(limit, page, query);

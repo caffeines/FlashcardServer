@@ -1,12 +1,20 @@
 /* eslint-disable object-curly-newline */
 const topicCreateLogic = require('../.././../logic/topic/updateLogic');
+const topicFindLogic = require('../.././../logic/topic/findLogic');
 const { authenticate, authorizeAdminOrOwner } = require('../../../middleware/auth');
 const { createValidator } = require('../../../middleware/validator/request/topic');
 
 module.exports = {
   get_index: [
     async (req, res) => {
-      res.ok({ message: 'Hello Docker!' });
+      const { findTopic } = topicFindLogic;
+      const { page } = req.query;
+      try {
+        const topics = await findTopic(page);
+        res.ok(topics);
+      } catch (error) {
+        res.serverError({ message: 'Something went wrong' });
+      }
     }],
   patch_index: [
     authenticate,

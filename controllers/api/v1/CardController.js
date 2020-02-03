@@ -28,12 +28,12 @@ module.exports = {
       const { id: createdBy } = req.admin || req.user;
       try {
         const card = await createCard({ title, description, url, topic, createdBy });
-        const newTopic = await createTopic(title);
+        topic.forEach(async (topc) => {
+          await createTopic(topc);
+        });
         res.ok(card);
       } catch (err) {
-        console.log(err);
-
-        res.serverError(err);
+        res.serverError({ message: 'Something went wrong' });
       }
     }],
 };

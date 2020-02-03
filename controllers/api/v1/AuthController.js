@@ -115,7 +115,7 @@ module.exports = {
           const jwtToken = await createToken(user);
           res.ok({ jwtToken });
         } else {
-          res.badRequest({ message: 'Email or Password incorrect' });
+          res.badRequest({ message: 'Username or Password incorrect' });
         }
       } catch (err) {
         error(err);
