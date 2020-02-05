@@ -4,7 +4,7 @@ const { getModel } = require('../lib/utils');
 const CardSchema = new mongoose.Schema({
   title: {
     type: String,
-    minlength: 100,
+    minlength: 2,
     required: true,
   },
   description: {

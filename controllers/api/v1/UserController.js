@@ -17,7 +17,7 @@ module.exports = {
       const profile = await findById(id);
       if (profile) {
         const { username, name, email, role, joinedAt } = profile;
-        res.ok({ username, name, email, role, joinedAt });
+        res.ok({ username, name, email, role, joinedAt, id });
       } else {
         res.notFound({ message: 'user not found' });
       }
