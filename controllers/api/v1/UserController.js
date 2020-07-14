@@ -19,7 +19,7 @@ module.exports = {
         const { username, name, email, role, joinedAt } = profile;
         res.ok({ username, name, email, role, joinedAt, id });
       } else {
-        res.notFound({ message: 'user not found' });
+        res.notFound({ message: 'User not found' });
       }
     },
   ],

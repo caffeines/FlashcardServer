@@ -29,7 +29,7 @@ const createToken = async (user) => {
     return token;
   } catch (ex) {
     error(ex);
-    return null;
+    return Promise.reject(ex);
   }
 };
 exports.createToken = createToken;
@@ -46,7 +46,7 @@ const verifyToken = async (token) => {
     return payload;
   } catch (ex) {
     error(ex);
-    return null;
+    return Promise.reject(ex);
   }
 };
 exports.verifyToken = verifyToken;

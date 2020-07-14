@@ -7,6 +7,7 @@ const updateCard = async (id, logic) => {
     return card;
   } catch (ex) {
     error(ex);
+    return Promise.reject(ex);
   }
 };
 exports.updateCard = updateCard;

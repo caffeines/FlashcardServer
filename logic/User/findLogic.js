@@ -13,6 +13,7 @@ const findByUsername = async (username) => {
     return user;
   } catch (ex) {
     error(ex);
+    return Promise.reject(ex);
   }
 };
 exports.findByUsername = findByUsername;
@@ -29,6 +30,7 @@ const findById = async (id) => {
     return user;
   } catch (ex) {
     error(ex);
+    return Promise.reject(ex);
   }
 };
 exports.findById = findById;

@@ -31,6 +31,13 @@ const UserSchema = new mongoose.Schema({
   token: {
     type: String,
   },
+  tokenGeneratedAt: {
+    type: Number,
+    default: Date.now(),
+  },
+  tokenExpiresAt: {
+    type: Number,
+  },
   joinedAt: {
     type: Number,
     default: Date.now(),

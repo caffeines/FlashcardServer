@@ -13,6 +13,7 @@ const findById = async (id) => {
     return card;
   } catch (ex) {
     error(ex);
+    return Promise.reject(ex);
   }
 };
 exports.findById = findById;
@@ -42,12 +43,12 @@ const paginateByLove = async (limit, page, query) => {
         .skip(skips)
         .limit(Limit);
     }
-    const totalProduct = await Card.countDocuments();
+    const totalProduct = await Card.countDocuments(query);
     const hasMore = totalProduct > Page * Limit;
     return { cards, hasMore };
   } catch (ex) {
     error(ex);
-    return ex;
+    return Promise.reject(ex);
   }
 };
 exports.paginate = paginateByLove;
@@ -69,7 +70,7 @@ const paginateByDate = async (limit, page, query) => {
     const cards = await Card.find({ ...query })
       .sort({ created: -1 })
       .limit(Limit);
-    const totalProduct = await Card.countDocuments();
+    const totalProduct = await Card.countDocuments(query);
     const hasMore = totalProduct > Page * Limit;
     return { cards, hasMore };
   } catch (ex) {
@@ -105,7 +106,7 @@ const findCard = async (type, lastId, page, limit, topics, options) => {
     if (lastId) {
       query = {
         ...query,
-        _id: { $gt: lastId },
+        _id: { $lt: lastId },
       };
     }
     cards = await paginateByDate(limit, page, query);

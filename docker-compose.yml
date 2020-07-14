@@ -18,8 +18,7 @@ services:
              - /home/flashcard/app/node_modules
         networks:
             - app-network
-        # command: npx pm2 start ecosystem.config.js --no-daemon
-        command: node app.js
+        command: npx pm2 start ecosystem.config.js --no-daemon
 networks:
   app-network:
     driver: bridge

@@ -22,18 +22,18 @@ module.exports = {
     authenticate,
     createCardValidator,
     async (req, res) => {
-      const { createCard } = cardCreateLogic;
-      const { createTopic } = createTopicLogic;
       const { title, description, topic, url } = req.body;
       const { id: createdBy } = req.admin || req.user;
       try {
-        const card = await createCard({ title, description, url, topic, createdBy });
+        const card = await cardCreateLogic.createCard({
+          title, description, url, topic, createdBy,
+        });
         topic.forEach(async (topc) => {
-          await createTopic(topc);
+          await createTopicLogic.createTopic(topc);
         });
         res.ok(card);
       } catch (err) {
-        res.serverError({ message: 'Something went wrong' });
+        res.serverError(err);
       }
     }],
 };
