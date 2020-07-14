@@ -11,13 +11,16 @@ COPY package*.json ./
 USER node
 
 RUN npm install
-RUN npm install pm2 -g
+RUN npm install pm2@latest -g
+RUN npm install pm2@latest
+# RUN pm2 update
 ENV PM2_PUBLIC_KEY vc6u8s82ibxx7si
 ENV PM2_SECRET_KEY aiw3uf8dcko2nun
 ENV NODE_MAILER_PASSWORD FakePass
 
 COPY --chown=node:node . .
 
-EXPOSE 3141
+EXPOSE 4000
 
-CMD ["pm2-runtime", "process.yml"]
+# CMD ["pm2-runtime", "process.yml"]
+CMD [ "node", "app.js" ]

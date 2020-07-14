@@ -12,13 +12,14 @@ services:
         # environment:
             # USER: caffeines
         ports:
-            - 80:3141
+            - 4000:4000
         volumes:
             - .:/home/flashcard/app
              - /home/flashcard/app/node_modules
         networks:
             - app-network
-        command: npx pm2 start ecosystem.config.js --no-daemon
+        # command: npx pm2 start ecosystem.config.js --no-daemon
+        command: node app.js
 networks:
   app-network:
     driver: bridge
