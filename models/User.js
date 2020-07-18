@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    default: 'owner',
+    default: 'user',
   },
   token: {
     type: String,
