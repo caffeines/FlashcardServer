@@ -45,6 +45,9 @@ const UserSchema = new mongoose.Schema({
   suggestedTopics: {
     type: [String],
   },
+  favouriteTopics: {
+    type: [String],
+  },
   lovedCard: {
     type: [ObjectId],
     ref: 'Card',
