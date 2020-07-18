@@ -37,4 +37,17 @@ module.exports = {
       }
     },
   ],
+  patch_removeFavourite: [
+    authenticate,
+    async (req, res) => {
+      try {
+        const { name } = req.body;
+        const { id } = req.admin || req.user;
+        await updateLogic.removeFavoriteTopicById(id, name);
+        res.ok({});
+      } catch (err) {
+        res.serverError(err);
+      }
+    },
+  ],
 };

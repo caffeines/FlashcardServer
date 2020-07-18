@@ -13,3 +13,17 @@ const addFavoriteTopicById = async (id, topicName) => {
   }
 };
 exports.addFavoriteTopicById = addFavoriteTopicById;
+
+const removeFavoriteTopicById = async (id, topicName) => {
+  try {
+    await User.updateOne(
+      { _id: id },
+      { $pull: { favouriteTopics: topicName } },
+      { multi: true },
+    );
+    return {};
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+exports.removeFavoriteTopicById = removeFavoriteTopicById;
