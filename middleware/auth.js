@@ -14,7 +14,7 @@ const authenticate = async (req, res, next) => {
     try {
       const payload = await verifyToken(token);
       if (!payload) {
-        res.unauthorized({ message: 'unauthorized' });
+        res.unauthorized({ message: 'Unauthorized, Please login first' });
         return;
       }
       if (payload.role === 'admin' || payload.role === 'owner') {

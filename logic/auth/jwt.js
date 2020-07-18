@@ -18,8 +18,6 @@ const createToken = async (user) => {
   const {
     username, _id: id, role, email,
   } = user;
-  console.log(username, id, role, email);
-
   let TTL;
   if (role === 'admin' || role === 'moderator') TTL = 1000 * 60 * 60;
   const payload = {
@@ -31,7 +29,7 @@ const createToken = async (user) => {
     return token;
   } catch (ex) {
     error(ex);
-    return null;
+    return Promise.reject(ex);
   }
 };
 exports.createToken = createToken;
@@ -48,7 +46,7 @@ const verifyToken = async (token) => {
     return payload;
   } catch (ex) {
     error(ex);
-    return null;
+    return Promise.reject(ex);
   }
 };
 exports.verifyToken = verifyToken;

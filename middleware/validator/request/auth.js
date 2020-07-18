@@ -2,6 +2,7 @@ const { validateEmail } = require('../../../lib/utils');
 
 const loginValidator = (req, res, next) => {
   const { username, password } = req.body;
+
   if (username === '' || password === '') {
     res.badRequest({ message: 'Username and password are required field' });
     return;
@@ -13,7 +14,7 @@ exports.loginValidator = loginValidator;
 const usernemaIsAvailebleValidator = (req, res, next) => {
   const { username } = req.query;
   if (!username || username === '') {
-    res.badRequest({ message: 'no a valid request' });
+    res.badRequest({ message: 'Not a valid request' });
     return;
   }
   next();

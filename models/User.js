@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { ObjectId } = require('mongoose').SchemaTypes;
 const { getModel } = require('../lib/utils');
 
 const UserSchema = new mongoose.Schema({
@@ -25,14 +26,31 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    default: 'owner',
+    default: 'user',
   },
   token: {
     type: String,
   },
+  tokenGeneratedAt: {
+    type: Number,
+    default: Date.now(),
+  },
+  tokenExpiresAt: {
+    type: Number,
+  },
   joinedAt: {
     type: Number,
     default: Date.now(),
+  },
+  suggestedTopics: {
+    type: [String],
+  },
+  favouriteTopics: {
+    type: [String],
+  },
+  lovedCard: {
+    type: [ObjectId],
+    ref: 'Card',
   },
 });
 UserSchema.index({

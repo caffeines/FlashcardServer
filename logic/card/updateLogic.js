@@ -1,14 +1,13 @@
 const Card = require('../../models/Card');
 const { error } = require('../../constant/chalkEvent');
 
-const createCard = async (cardObj) => {
+const updateCard = async (id, logic) => {
   try {
-    const newCard = new Card({ ...cardObj });
-    const card = await newCard.save();
+    const card = await Card.findByIdAndUpdate({ _id: id, ...logic }, { new: true });
     return card;
   } catch (ex) {
     error(ex);
     return Promise.reject(ex);
   }
 };
-exports.createCard = createCard;
+exports.updateCard = updateCard;
