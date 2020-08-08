@@ -1,27 +1,19 @@
-const nodemailer = require('nodemailer');
-const { email, password } = require('../config/nodeMailer');
+const sgMail = require('@sendgrid/mail');
+const { sendgridApiKey } = require('../config/mailer');
 const { error, success } = require('../constant/chalkEvent');
 
 const mailer = async (to, subject, htmlBody) => {
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: email,
-      pass: password,
-    },
-  });
-
+  sgMail.setApiKey(sendgridApiKey);
   try {
-    const info = await transporter.sendMail({
-      from: '"Flash Card" <no-reply@gmail.com>', // sender address
+    const mail = {
+      from: 'me.caffeines@gmail.com', // sender address
       to, // list of receivers
       subject, // Subject line
       html: htmlBody, // html body
-    });
-    if (info) {
-      success(`Mail messageId: ${info.messageId}`);
-      return { status: true, message: 'Email sent!' };
-    }
+    };
+    await sgMail.send(mail);
+    success('Email sent');
+    return { status: true, message: 'Email sent!' };
   } catch (err) {
     error(err);
     return { status: false, message: 'Mail sending failed!' };
