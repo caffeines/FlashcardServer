@@ -2,6 +2,7 @@
 const { authenticate, authorizeAdminOrOwner } = require('../../../middleware/auth');
 const userFindLogic = require('../../../logic/User/findLogic');
 const updateLogic = require('../../../logic/User/updateLogic');
+const { isNameAvilable } = require('../../../middleware/validator/request/user');
 
 module.exports = {
   get_index: [
@@ -26,12 +27,13 @@ module.exports = {
   ],
   patch_addFavourite: [
     authenticate,
+    isNameAvilable,
     async (req, res) => {
       try {
         const { name } = req.body;
         const { id } = req.admin || req.user;
         await updateLogic.addFavoriteTopicById(id, name);
-        res.ok({});
+        res.ok({ message: 'success' });
       } catch (err) {
         res.serverError(err);
       }
@@ -39,12 +41,13 @@ module.exports = {
   ],
   patch_removeFavourite: [
     authenticate,
+    isNameAvilable,
     async (req, res) => {
       try {
         const { name } = req.body;
         const { id } = req.admin || req.user;
         await updateLogic.removeFavoriteTopicById(id, name);
-        res.ok({});
+        res.ok({ message: 'success' });
       } catch (err) {
         res.serverError(err);
       }
