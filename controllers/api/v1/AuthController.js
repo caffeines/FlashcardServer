@@ -10,7 +10,6 @@ const { createToken } = require('../../../logic/auth/jwt');
 const { error } = require('../../../constant/chalkEvent');
 const { appLink } = require('../../../config/server');
 
-
 module.exports = {
   get_confirmEmail: [
     async (req, res) => {
