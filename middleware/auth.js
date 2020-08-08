@@ -26,7 +26,7 @@ const authenticate = async (req, res, next) => {
       }
     } catch (ex) {
       error(ex);
-      res.serverError({ message: 'Somthing went wrong' });
+      res.serverError({ message: 'Unauthorized, invalid token' });
     }
   }
 };

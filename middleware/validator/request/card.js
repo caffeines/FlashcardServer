@@ -9,6 +9,11 @@ const createCardValidator = (req, res, next) => {
     return;
   }
   const { title, description, topic } = req.body;
+
+  if (topic && typeof topic !== 'object') {
+    res.badRequest({ message: 'Topic list should be array' });
+    return;
+  }
   if (!title || !description || !topic || !topic.length) {
     res.badRequest({ message: 'Check your input fields' });
     return;
