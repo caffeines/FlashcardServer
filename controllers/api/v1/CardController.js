@@ -2,7 +2,7 @@
 const cardCreateLogic = require('../../../logic/card/createLogic');
 const createTopicLogic = require('../../../logic/topic/updateLogic');
 const cardFindLogic = require('../../../logic/card/findLogic');
-const { authenticate, authorizeAdminOrOwner } = require('../../../middleware/auth');
+const { authenticate } = require('../../../middleware/auth');
 const { createCardValidator } = require('../../../middleware/validator/request/card');
 
 module.exports = {
@@ -28,11 +28,13 @@ module.exports = {
         const card = await cardCreateLogic.createCard({
           title, description, url, topic, createdBy,
         });
-        topic.forEach(async (topc) => {
-          await createTopicLogic.createTopic(topc);
-        });
+        // eslint-disable-next-line array-callback-return
+        await Promise.all(topic.map((t) => {
+          createTopicLogic.createTopic(t);
+        }));
         res.ok(card);
       } catch (err) {
+        console.log(err);
         res.serverError(err);
       }
     }],

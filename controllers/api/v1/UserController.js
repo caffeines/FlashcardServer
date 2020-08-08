@@ -9,6 +9,7 @@ module.exports = {
     authenticate,
     authorizeAdminOrOwner,
     async (req, res) => {
+      // TODO: Implement later
       res.ok({ hello: 'Hello' });
     }],
   get_profile: [
